@@ -6,18 +6,18 @@
 	<arg name="d_gain" default="2"/>
 
 	<!-- default is in simulation -->
-	<arg name="sim_flag" default="0"/> 
+	<arg name="sim_flag" default="0"/>
 
 	<!-- velocity-based PID -->
-	<node name="pid_vel_jaco" pkg="iact_control" type="pid_vel_jaco.py" args="$(arg p_gain) $(arg i_gain) $(arg d_gain) $(arg sim_flag)" output="screen"/>
-	
-	<!-- torque-based PID 
-	<node name="pid_torque_jaco" pkg="iact_control" type="pid_torque_jaco.py" args="$(arg p_gain) $(arg i_gain) $(arg d_gain) $(arg sim_flag)" output="screen"/> -->
+	<node name="pid_vel_jaco" pkg="iact_nick_control" type="pid_vel_jaco.py" args="$(arg p_gain) $(arg i_gain) $(arg d_gain) $(arg sim_flag)" output="screen"/>
+
+	<!-- torque-based PID
+	<node name="pid_torque_jaco" pkg="iact_nick_control" type="pid_torque_jaco.py" args="$(arg p_gain) $(arg i_gain) $(arg d_gain) $(arg sim_flag)" output="screen"/> -->
 
 	<!-- Visualization -->
-	<node name="rvizualizer" pkg="iact_control" type="rvizualizer.py"/> 
+	<node name="rvizualizer" pkg="iact_nick_control" type="rvizualizer.py"/>
 
-	<!-- Start RVIZ --> 
+	<!-- Start RVIZ -->
 	<node pkg="rviz" type="rviz" name="rviz"/>
 
 </launch>

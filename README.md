@@ -1,6 +1,6 @@
-# iact_control: InterACTive Learning & Control
+# iact_nick_control: InterACTive Learning & Control
 
-Control, planning, and learning system for physical human-robot interaction (pHRI) with a JACO2 7DOF robotic arm. 
+Control, planning, and learning system for physical human-robot interaction (pHRI) with a JACO2 7DOF robotic arm.
 
 ## Dependencies
 * Ubuntu 14.04, ROS Indigo, OpenRAVE, Python 2.7
@@ -11,7 +11,7 @@ Control, planning, and learning system for physical human-robot interaction (pHR
 ## Running the System
 ### Setting up the JACO2 Robot
 Turn the robot on and put it in home position by pressing and holding the center (yellow) button on the joystick.
- 
+
 In a new terminal, turn on the Kinova API by typing:
 ```
 roslaunch kinova_bringup kinova_robot.launch kinova_robotType:=j2s7s300 use_urdf:=true
@@ -19,7 +19,7 @@ roslaunch kinova_bringup kinova_robot.launch kinova_robotType:=j2s7s300 use_urdf
 ### Starting the controller, planner, and learning system
 In another terminal, run:
 ```
-roslaunch iact_control trajoptPID.launch ID:=0 task:=0 methodType:=A demo:=F record:=F
+roslaunch iact_nick_control trajoptPID.launch ID:=0 task:=0 methodType:=A demo:=F record:=F
 ```
 Command-line options include:
 * `ID`: Participant/user identification number (for experiments and data saving)

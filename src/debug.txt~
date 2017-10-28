@@ -1,0 +1,374 @@
+You can set logging level with TRAJOPT_LOG_THRESH. Valid values: FATAL ERROR WARN INFO DEBUG TRACE. Defaulting to INFO
+i set the angular force control params!
+[0;33m2017-07-12 11:27:03,610 openrave [WARN] [plugindatabase.h:577 InterfaceBasePtr OpenRAVE::RaveDatabase::Create] Failed to create name fcl_, interface collisionchecker
+[0m[0;33m2017-07-12 11:27:03,694 openrave [WARN] [urdf_loader.cpp:876 URDFLoader::deprecatedLoad] URDFLoader 'load' command is deprecated. Use 'LoadURI' instead.
+[0m[33m[ WARN] [1499884023.696481615]: Link 'jaco7dof_link_finger_1' is not known to URDF. Cannot disable collisons.[0m
+[0;33m2017-07-12 11:27:03,696 ros.rosconsole_bridge.console_bridge [WARN] [/tmp/binarydeb/ros-indigo-srdfdom-0.3.5/src/model.cpp:510 ] Link 'jaco7dof_link_finger_1' is not known to URDF. Cannot disable collisons.
+[0m[33m[ WARN] [1499884023.696566011]: Link 'jaco7dof_link_finger_1' is not known to URDF. Cannot disable collisons.[0m
+[0;33m2017-07-12 11:27:03,696 ros.rosconsole_bridge.console_bridge [WARN] [/tmp/binarydeb/ros-indigo-srdfdom-0.3.5/src/model.cpp:510 ] Link 'jaco7dof_link_finger_1' is not known to URDF. Cannot disable collisons.
+[0m[33m[ WARN] [1499884023.696604572]: Link 'jaco7dof_link_finger_2' is not known to URDF. Cannot disable collisons.[0m
+[0;33m2017-07-12 11:27:03,696 ros.rosconsole_bridge.console_bridge [WARN] [/tmp/binarydeb/ros-indigo-srdfdom-0.3.5/src/model.cpp:510 ] Link 'jaco7dof_link_finger_2' is not known to URDF. Cannot disable collisons.
+[0m[0;33m2017-07-12 11:27:03,697 openrave [WARN] [urdf_loader.cpp:370 URDFLoader::ParseURDF] Link[root]: Only trimeshes are supported for visual geometry.
+[0m[0;33m2017-07-12 11:27:04,625 openrave [WARN] [plugindatabase.h:577 InterfaceBasePtr OpenRAVE::RaveDatabase::Create] Failed to create name fcl_, interface collisionchecker
+[0m[INFO] iteration 1[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.337e+00 |  5.658e-02 |  5.658e-02 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  1.601e+02 |  4.163e+01 |  4.158e+01 |  9.988e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.615e+02 |  4.169e+01 |  4.164e+01 |  9.988e-01
+[INFO] expanded trust region. new box size: 0.1500[0m
+[INFO] iteration 2[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.280e+00 |  7.935e-02 |  7.935e-02 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  1.185e+02 |  6.219e+01 |  6.234e+01 |  1.002e+00
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.198e+02 |  6.227e+01 |  6.242e+01 |  1.002e+00
+[INFO] expanded trust region. new box size: 0.2250[0m
+[INFO] iteration 3[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.201e+00 | -1.761e-01 | -1.761e-01 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  5.620e+01 |  5.300e+01 |  4.802e+01 |  9.060e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  5.740e+01 |  5.283e+01 |  4.785e+01 |  9.057e-01
+[INFO] expanded trust region. new box size: 0.3375[0m
+[INFO] iteration 4[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.377e+00 |  2.285e-01 |  2.285e-01 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  8.181e+00 |  8.181e+00 |  2.316e+00 |  2.831e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  9.558e+00 |  8.410e+00 |  2.545e+00 |  3.026e-01
+[INFO] expanded trust region. new box size: 0.5063[0m
+[INFO] iteration 5[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.148e+00 |  1.206e-01 |  1.206e-01 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  5.865e+00 |  5.865e+00 | -3.942e+00 | -6.721e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  7.014e+00 |  5.986e+00 | -3.821e+00 | -6.384e-01
+[INFO] shrunk trust region. new box size: 0.0506[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.148e+00 |  2.608e-02 |  2.608e-02 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  5.865e+00 |  5.685e+00 |  5.292e+00 |  9.308e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  7.014e+00 |  5.711e+00 |  5.318e+00 |  9.311e-01
+[INFO] expanded trust region. new box size: 0.0759[0m
+[INFO] iteration 6[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.122e+00 |  2.461e-02 |  2.461e-02 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  5.734e-01 |  5.734e-01 |  3.156e-01 |  5.504e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.696e+00 |  5.980e-01 |  3.402e-01 |  5.689e-01
+[INFO] expanded trust region. new box size: 0.1139[0m
+[INFO] iteration 7[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.098e+00 |  3.554e-02 |  3.554e-02 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  2.578e-01 |  2.578e-01 | -5.953e-01 | -2.309e+00
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.355e+00 |  2.933e-01 | -5.597e-01 | -1.908e+00
+[INFO] shrunk trust region. new box size: 0.0114[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.098e+00 |  4.384e-03 |  4.384e-03 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  2.578e-01 |  2.578e-01 |  2.522e-01 |  9.782e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.355e+00 |  2.622e-01 |  2.566e-01 |  9.786e-01
+[INFO] expanded trust region. new box size: 0.0171[0m
+[INFO] iteration 8[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.093e+00 |  5.918e-03 |  5.918e-03 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  5.609e-03 |  5.609e-03 | -1.328e-02 | -2.368e+00
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.099e+00 |  1.153e-02 | -7.363e-03 | -6.388e-01
+[INFO] shrunk trust region. new box size: 0.0017[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.093e+00 |  6.022e-04 |  6.022e-04 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  5.609e-03 |  5.609e-03 |  5.429e-03 |  9.680e-01
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.099e+00 |  6.211e-03 |  6.031e-03 |  9.711e-01
+[INFO] expanded trust region. new box size: 0.0026[0m
+[INFO] iteration 9[0m
+[INFO]  [0m
+                |   oldexact |    dapprox |     dexact |      ratio
+          COSTS | -------------------------------------------------
+      joint_vel |  1.093e+00 |  9.024e-04 |  9.024e-04 |  1.000e+00
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+              f |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+    CONSTRAINTS | -------------------------------------------------
+           pose |  1.796e-04 |  1.796e-04 | -2.339e-04 | -1.302e+00
+            up1 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up2 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up3 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+            up4 |  0.000e+00 |  0.000e+00 |  0.000e+00 |   ------  
+          TOTAL |  1.093e+00 |  1.082e-03 |  6.685e-04 |  6.178e-01
+[INFO] converged because improvement ratio was small (9.901e-04 < 1.000e-03)[0m
+[INFO] woo-hoo! constraints are satisfied (to tolerance 1.00e-04)[0m
+[INFO] 
+==================
+Optimization results:
+status: CONVERGED
+cost values: (1.09268, 0, 0, 0, 0, 0)
+constraint violations: (8.98094e-06, 0, 0, 0, 0)
+n func evals: 13
+n qp solves: 12
+==================[0m
+----------------------------------
+Moving robot, press ENTER to quit:
+interaction
+starting interaction mode
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+ending interaction mode
+interaction
+starting interaction mode
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+ending interaction mode
+interaction
+starting interaction mode
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+interaction
+ending interaction mode
+----------------------------------
+[0;33m2017-07-12 11:27:18,772 openrave [WARN] [qtcoinrave.cpp:80 DestroyPlugin] SoQt releasing all memory
+[0mCoin debug: socontexthandler_cleanup(): 59 context-bound resources not free'd before exit.
+... logging to /home/anca/.ros/log/47ad7200-672f-11e7-8ab9-e839354fb7b3/roslaunch-anca-Ubuntu-24945.log
+Checking log directory for disk usage. This may take awhile.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/anca/catkin_ws/src/iact_control/launch/trajoptPID.launch
+[1mstarted roslaunch server http://anca-Ubuntu:39694/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: indigo
+ * /rosversion: 1.11.21
+
+NODES
+  /
+    pid_trajopt (iact_control/pid_trajopt.py)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/anca/catkin_ws/src/iact_control/launch/trajoptPID.launch http://localhost:11311
+core service [/rosout] found
+[1mprocess[pid_trajopt-1]: started with pid [24973][0m
+all processes on machine have died, roslaunch will exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

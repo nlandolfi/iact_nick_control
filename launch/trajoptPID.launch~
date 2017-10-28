@@ -1,0 +1,27 @@
+<launch>
+
+	<!-- Participant ID -->
+	<arg name="ID" default="0"/>
+
+	<!-- Experimental task (FAM - familiarization, EXP - experimental)-->
+	<arg name="task" default="EXP"/> 
+
+	<!-- Method type ('A'- impedance, 'B'- learning, 'C'- demonstration) -->
+	<arg name="methodType" default="A"/>
+
+	<!-- Demo mode ('T' - demo with optimal weights, 'F' - default weights) -->
+	<arg name="demo" default="F"/>
+
+	<!-- Record data mode -->
+	<arg name="record" default="F"/>
+
+	<!-- Feature learning method (ALL, MAX, LIKELY)-->
+	<arg name="featMethod" default="ALL"/>
+
+	<!-- How many features need correcting (1 = ONE_FEAT, 2 = TWO_FEAT)-->
+	<arg name="numFeat" default="1"/>
+
+	<!-- velocity-based with trajopt planning PID -->
+	<node name="pid_trajopt" pkg="iact_control" type="pid_trajopt.py" args="$(arg ID) $(arg task) $(arg methodType) $(arg demo) $(arg record) $(arg featMethod) $(arg numFeat)" output="screen"/>
+
+</launch>

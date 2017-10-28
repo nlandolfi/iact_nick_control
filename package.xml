@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package>
-  <name>iact_control</name>
+  <name>iact_nick_control</name>
   <version>0.0.0</version>
   <description>The iact_control package</description>
 
-  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="abajcsy@todo.todo">abajcsy</maintainer>
