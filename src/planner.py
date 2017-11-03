@@ -83,6 +83,9 @@ def pad(dofs):
         raise Exception("malformed dofs shape")
 
 def planner(env, num_waypts_plan):
+    """
+        curry a planner with an env and a waypoints number
+    """
     def plan(start, goal):
         return trajopt_traject(num_waypts_plan, np.asarray(start), np.asarray(goal), env)
 

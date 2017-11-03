@@ -58,15 +58,13 @@ def parse_torques(msg):
     torque_curr = np.array([msg.joint1,msg.joint2,msg.joint3,msg.joint4,msg.joint5,msg.joint6,msg.joint7])
     return torque_curr
 
+joint_thresholds = np.array([8, 8, 8, 2, 1, 1, 1, 1])
+
 def interpret_torques(torque_curr):
     interaction = False
+
     for i in range(7):
-        THRESHOLD = INTERACTION_TORQUE_THRESHOLD
-        if i == 3:
-            THRESHOLD = 2.0
-        if i > 3:
-            THRESHOLD = 1.0
-        if np.fabs(torque_curr[i]) > THRESHOLD:
+        if np.fabs(torque_curr[i]) > joint_thresholds[i]:
             interaction = True
         else:
             # zero out torques below threshold for cleanliness
