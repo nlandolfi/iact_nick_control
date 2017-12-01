@@ -1,7 +1,7 @@
 import openravepy
 from openravepy import *
 from prpy.bind import bind_subclass
-from archierobot import ArchieRobot
+from interactpy.archierobot import ArchieRobot
 from catkin.find_in_workspaces import find_in_workspaces
 import numpy as np
 import logging

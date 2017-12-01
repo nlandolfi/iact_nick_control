@@ -13,6 +13,8 @@ import planner
 import ros_utils
 import rospy
 
+from geometry_msgs.msg import Vector3
+
 def load(filename):
     """
         Load a JSON file.
@@ -141,11 +143,8 @@ def run(start, goals, prior):
     }
     model_filename = 'jaco_dynamics'
     env, robot = openrave_utils.initialize(model_filename)
+    openrave_utils.plotTable(env)
     p = planner.planner(env, 4)
-
-    vel_pub = jaco.init()
-
-    jaco.start_admittance_mode()
 
     def target():
         if shared['state'] == STATE_STARTING:
@@ -161,14 +160,14 @@ def run(start, goals, prior):
         else:
             raise Exception("unknown state")
 
-    def angles(msg):
+    def angles(current):
         """
             Callback for the joint angles of the Jaco Arm.
 
             Sets the current configuration, q, and updates the state.
         """
         shared['p'] = shared['q']
-        shared['q'] = jaco.parse_joint_angles(msg)
+        shared['q'] = current
         robot.SetDOFValues(np.append(shared['q'], [0, 0, 0]))
 
         if shared['state'] == STATE_STARTING:
@@ -176,14 +175,16 @@ def run(start, goals, prior):
                 print("STARTING")
                 shared['state'] = STATE_RUNNING
                 shared['start_time'] = time.time()
-                shared['plan'] = p(shared['q'], estimate(goals, shared['belief']))
+                shared['plan'] = p(robot.GetActiveDOFValues()[:7], estimate(goals, shared['belief']))
         elif shared['state'] == STATE_RUNNING:
             if all_close(estimate(goals, shared['belief']), shared['q']):
+                print('COMPLETED.')
+                print(np.linalg.norm(robot.GetActiveDOFValues()[:7] - goals[0]))
                 shared['state'] = STATE_STOPPED
-        #elif STATE == STATE_STOPPED:
+        elif shared['state'] == STATE_STOPPED:
+            pass
         else:
-            raise Exception("unknown state")
-    jaco.subscribe_joint_angles(angles)
+            raise Exception('unknown state') 
 
     def torques(msg):
         """
@@ -192,38 +193,33 @@ def run(start, goals, prior):
         if not shared['state'] == STATE_RUNNING:
             return
 
-        torques, interaction = jaco.interpret_torques(jaco.parse_torques(msg))
-        if interaction:
-            print("INTERACTION")
-            shared['belief'] = update(robot, shared['p'], shared['q'], goals, shared['belief'])
-            print("beliefs -> %s" % (shared['belief']))
-            shared['plan'] = p(shared['q'], estimate(goals, shared['belief']))
-    jaco.subscribe_joint_torques(torques)
+        perturbation = .05 * np.array([msg.x, msg.y, msg.z])
+        J = robot.arm.CalculateJacobian()
+        Jinv = np.linalg.pinv(J)
+        delta_q = Jinv.dot(perturbation)
+        #shared['q'] = shared['p'] + delta_q
+        #robot.SetActiveDOFValues(np.append(shared['q'], [0, 0, 0]))
+        shared['belief'] = update(robot, shared['p'], shared['p'] + delta_q, goals, shared['belief'])
+        print("beliefs -> %s" % (shared['belief']))
+        shared['plan'] = p(robot.GetActiveDOFValues()[:7], estimate(goals, shared['belief']))
+    rospy.Subscriber('jaco_perturbations', Vector3, torques)
 
-    # P, I, D gains
-    p_gain = 50.0
-    i_gain = 0.0
-    d_gain = 20.0
-    P = p_gain*np.eye(7)
-    I = i_gain*np.eye(7)
-    D = d_gain*np.eye(7)
-    controller = pid.PID(P,I,D,0,0)
-
-    ticker = rospy.Rate(100)
     print "----------------------------------"
     print "Moving robot, press ENTER to quit:"
+    rospy.init_node("pid_trajopt")
+    ticker = rospy.Rate(100)
+    initial_ee = robot.arm.GetEndEffectorTransform()[:3,-1]
+    goalA = xyz(robot, goals[0])
+    goalB = xyz(robot, goals[1])
+    openrave_utils.plotMug(env)
+    mug = env.GetKinBody('mug')
+    T = mug.GetTransform()
+    T[:3,-1] = goalA
+    mug.SetTransform(T)
     while not rospy.is_shutdown():
-        if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
-            line = raw_input()
-            break
-
-        if shared['q'] is not None:
-            #print([c*180./math.pi for c in shared['q']])
-            cmd = cap(-controller.update_PID(error(target(), shared['q']).reshape([7, 1])))
-            vel_pub.publish(ros_utils.cmd_to_JointVelocityMsg(cmd))
+        angles(robot.GetActiveDOFValues()[:7])
+        robot.SetActiveDOFValues(np.append(target(), [0,0,0]))
         ticker.sleep()
-    print "----------------------------------"
-    jaco.stop_admittance_mode()
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
