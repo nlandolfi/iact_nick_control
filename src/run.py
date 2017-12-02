@@ -12,6 +12,7 @@ import pid
 import planner
 import ros_utils
 import rospy
+import matplotlib.pyplot as plt
 
 from geometry_msgs.msg import Vector3
 
@@ -130,7 +131,7 @@ def update(robot, p, q, goals, beliefs):
     goals_dirs = [direction(xyz(robot, p), goal) for goal in goals]
     interaction_dir = direction(xyz(robot, p), xyz(robot, q))
     print("INTERACTION DIR %s" % (interaction_dir))
-    beliefs = np.array([b*gaussian(goal_dir, 1e-2)(interaction_dir) for (b, goal_dir) in zip(beliefs, goals_dirs)])
+    beliefs = np.array([b*gaussian(goal_dir, 1)(interaction_dir) for (b, goal_dir) in zip(beliefs, goals_dirs)])
     return normalize(beliefs)
 
 def run(start, goals, prior):
@@ -186,7 +187,8 @@ def run(start, goals, prior):
                 shared['latest_plan_time'] = shared['start_time']
                 shared['plan'] = p(robot.GetActiveDOFValues()[:7], estimate(goals, shared['belief']))
         elif shared['state'] == STATE_RUNNING:
-            if all_close(estimate(goals, shared['belief']), shared['q'], epsilon=0.01):
+            if np.any([all_close(shared['q'], goal, epsilon=0.01) for goal in goals]):
+#            if all_close(estimate(goals, shared['belief']), shared['q'], epsilon=0.01):
                 print('COMPLETED.')
                 print(np.linalg.norm(robot.GetActiveDOFValues()[:7] - goals[0]))
                 shared['state'] = STATE_STOPPED
@@ -229,7 +231,15 @@ def run(start, goals, prior):
     T[:3,-1] = goalA
     mug.SetTransform(T)
 
+    barplot = plt.bar([0, 1], [1., 1.])
+    # plt.ion()
+    plt.show(block=False)
+
     while not rospy.is_shutdown():
+        barplot[0].set_height(shared['belief'][0])
+        barplot[1].set_height(shared['belief'][1])
+        plt.pause(.00001)
+        plt.draw()
         angles(robot.GetActiveDOFValues()[:7])
         with robot.GetEnv():
             robot.SetActiveDOFValues(np.append(target(), [0,0,0]))
