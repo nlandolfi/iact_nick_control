@@ -26,7 +26,9 @@ def degreesToRadians(a):
     """
         Degrees to radians conversion.
     """
-    return np.asarray(a)*(math.pi/180.0)
+    temp = np.asarray(a)*(math.pi/180.0)
+    temp[2] += np.pi
+    return temp
 
 def parse(exp):
     """
@@ -111,8 +113,11 @@ def gaussian(mu, var):
             )
 
 def xyz(robot, q):
+    current_config = robot.GetActiveDOFValues()
     robot.SetDOFValues(np.append(q, [0, 0, 0]))
-    return openrave_utils.robotToCartesian(robot)[6]
+    coords = openrave_utils.robotToCartesian(robot)[6]
+    robot.SetActiveDOFValues(current_config)
+    return coords
 
 def direction(x, y):
     return (y - x)/np.linalg.norm(y - x + 1e-12)
@@ -132,18 +137,19 @@ def run(start, goals, prior):
     print("STARTING WITH")
     print("START: %s" % (start))
     print("GOALS: %s" % (goals))
-    raw_input()
     shared = {
         'p':          None,
         'q':          None,
         'state':      STATE_STARTING,
         'start_time': None,
+        'latest_plan_time': None,
         'belief':     prior,
         'plan':       None,
     }
     model_filename = 'jaco_dynamics'
     env, robot = openrave_utils.initialize(model_filename)
     openrave_utils.plotTable(env)
+    raw_input()
     p = planner.planner(env, 4)
 
     def target():
@@ -153,7 +159,10 @@ def run(start, goals, prior):
             if shared['start_time'] is None:
                 raise Exception("start_time is none!")
 
-            return interpolate(shared['plan'], time.time() - shared["start_time"], 0, 10, 0.5)
+            current_time = time.time()
+            time_since_plan = current_time - shared['latest_plan_time']
+            remaining_duration = 10 - (current_time - shared['start_time'])
+            return interpolate(shared['plan'], time_since_plan, 0, remaining_duration, 0.5)
 
         elif shared['state'] == STATE_STOPPED:
             return estimate(goals, shared['belief'])
@@ -168,16 +177,16 @@ def run(start, goals, prior):
         """
         shared['p'] = shared['q']
         shared['q'] = current
-        robot.SetDOFValues(np.append(shared['q'], [0, 0, 0]))
 
         if shared['state'] == STATE_STARTING:
             if all_close(start, shared['q']):
                 print("STARTING")
                 shared['state'] = STATE_RUNNING
                 shared['start_time'] = time.time()
+                shared['latest_plan_time'] = shared['start_time']
                 shared['plan'] = p(robot.GetActiveDOFValues()[:7], estimate(goals, shared['belief']))
         elif shared['state'] == STATE_RUNNING:
-            if all_close(estimate(goals, shared['belief']), shared['q']):
+            if all_close(estimate(goals, shared['belief']), shared['q'], epsilon=0.01):
                 print('COMPLETED.')
                 print(np.linalg.norm(robot.GetActiveDOFValues()[:7] - goals[0]))
                 shared['state'] = STATE_STOPPED
@@ -186,11 +195,11 @@ def run(start, goals, prior):
         else:
             raise Exception('unknown state') 
 
-    def torques(msg):
+    def perturbations(msg):
         """
-            Callback for the joint torques of the Jaco Arm.
+            Callback for the joint perturbations of the Jaco Arm.
         """
-        if not shared['state'] == STATE_RUNNING:
+        if shared['state'] != STATE_RUNNING:
             return
 
         perturbation = .05 * np.array([msg.x, msg.y, msg.z])
@@ -199,15 +208,18 @@ def run(start, goals, prior):
         delta_q = Jinv.dot(perturbation)
         #shared['q'] = shared['p'] + delta_q
         #robot.SetActiveDOFValues(np.append(shared['q'], [0, 0, 0]))
-        shared['belief'] = update(robot, shared['p'], shared['p'] + delta_q, goals, shared['belief'])
-        print("beliefs -> %s" % (shared['belief']))
-        shared['plan'] = p(robot.GetActiveDOFValues()[:7], estimate(goals, shared['belief']))
-    rospy.Subscriber('jaco_perturbations', Vector3, torques)
+        with robot.GetEnv():
+            current_config = robot.GetActiveDOFValues()[:7]
+            shared['belief'] = update(robot, current_config, current_config + delta_q, goals, shared['belief'])
+            print("beliefs -> %s" % (shared['belief']))
+            shared['plan'] = p(current_config, estimate(goals, shared['belief']))
+            shared['latest_plan_time'] = time.time()
+    rospy.Subscriber('jaco_perturbations', Vector3, perturbations)
 
     print "----------------------------------"
     print "Moving robot, press ENTER to quit:"
     rospy.init_node("pid_trajopt")
-    ticker = rospy.Rate(100)
+    ticker = rospy.Rate(30)
     initial_ee = robot.arm.GetEndEffectorTransform()[:3,-1]
     goalA = xyz(robot, goals[0])
     goalB = xyz(robot, goals[1])
@@ -216,9 +228,11 @@ def run(start, goals, prior):
     T = mug.GetTransform()
     T[:3,-1] = goalA
     mug.SetTransform(T)
+
     while not rospy.is_shutdown():
         angles(robot.GetActiveDOFValues()[:7])
-        robot.SetActiveDOFValues(np.append(target(), [0,0,0]))
+        with robot.GetEnv():
+            robot.SetActiveDOFValues(np.append(target(), [0,0,0]))
         ticker.sleep()
 
 if __name__ == '__main__':
