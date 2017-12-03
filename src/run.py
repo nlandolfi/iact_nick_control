@@ -50,6 +50,9 @@ def parse(exp):
         raise Exception("need at least one goal")
     goals = [degreesToRadians(goal) for goal in goals]
 
+    mugs = exp["mugs"]
+    mugs = [np.array(mug) for mug in mugs]
+
     if "prior" not in exp: # default to uniform
         prior = [1./len(goals) for g in goals]
     else:
@@ -62,7 +65,7 @@ def parse(exp):
     if "name" not in obs:
         raise Exception("observation model needs name")
 
-    return (start, goals, prior)
+    return (start, goals, mugs, prior)
 
 STATE_STARTING = 0
 STATE_RUNNING  = 1
@@ -134,7 +137,7 @@ def update(robot, p, q, goals, beliefs):
     beliefs = np.array([b*gaussian(goal_dir, 1)(interaction_dir) for (b, goal_dir) in zip(beliefs, goals_dirs)])
     return normalize(beliefs)
 
-def run(start, goals, prior):
+def run(start, goals, mugs, prior):
     print("STARTING WITH")
     print("START: %s" % (start))
     print("GOALS: %s" % (goals))
@@ -150,6 +153,18 @@ def run(start, goals, prior):
     model_filename = 'jaco_dynamics'
     env, robot = openrave_utils.initialize(model_filename)
     openrave_utils.plotTable(env)
+    for i, mug_T in enumerate(mugs):
+        openrave_utils.plotMug(env)
+        mug = env.GetKinBody('mug')
+        mug.SetName('mug{:d}'.format(i))
+        T = mug.GetTransform()
+        T[:3,-1] = mug_T
+        mug.SetTransform(T)
+
+    barplot = plt.bar([.2, .6], [.5, .5], .3)
+    plt.ylim([0, 1])
+    plt.show(block=False)
+
     raw_input()
     p = planner.planner(env, 4)
 
@@ -222,18 +237,9 @@ def run(start, goals, prior):
     print "Moving robot, press ENTER to quit:"
     rospy.init_node("pid_trajopt")
     ticker = rospy.Rate(30)
-    initial_ee = robot.arm.GetEndEffectorTransform()[:3,-1]
-    goalA = xyz(robot, goals[0])
-    goalB = xyz(robot, goals[1])
-    openrave_utils.plotMug(env)
-    mug = env.GetKinBody('mug')
-    T = mug.GetTransform()
-    T[:3,-1] = goalA
-    mug.SetTransform(T)
-
-    barplot = plt.bar([0, 1], [1., 1.])
-    # plt.ion()
-    plt.show(block=False)
+    # initial_ee = robot.arm.GetEndEffectorTransform()[:3,-1]
+    # goalA = xyz(robot, goals[0])
+    # goalB = xyz(robot, goals[1])
 
     while not rospy.is_shutdown():
         barplot[0].set_height(shared['belief'][0])
